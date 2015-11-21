@@ -1,12 +1,12 @@
-var exec = require('child_process').exec;
-var config = {
-  ssid: 'vanreymann'
-};
-var cmd = 'sudo iwlist wlp3s0 scan | grep ' + config.ssid;
-console.log(cmd);
+var exec = require('child_process').exec,
+    config = {
+        ssid: 'vanreymann',
+        lockCmd: 'xtrlock'
+    },
+    cmd = 'sudo iwlist wlp3s0 scan | grep ' + config.ssid;
 
-exec(cmd, function(error, stdout, stderr) {
-  // command output is in stdout
-  console.log(stdout);
-  console.log(stderr);
-});
+var test = function() {
+    exec(cmd, function(error, stdout, stderr) {
+        return stdout;
+    });
+}
