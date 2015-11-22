@@ -1,7 +1,7 @@
 var exec = require('child_process').exec,
     config = {
         ssid: 'vanreymann',
-        lockCmd: 'xflock4'
+        lockCmd: 'slock'
     },
     cmd = 'sudo iwlist wlp3s0 scan | grep ' + config.ssid;
 
@@ -23,3 +23,7 @@ console.log('lock');
 }
 
 test();
+
+setInterval(function() {
+    test();
+}, 10000);
