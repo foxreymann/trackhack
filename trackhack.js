@@ -15,16 +15,19 @@ var test = function() {
 }
 
 var tested = function(stdout) {
-console.log(stdout);
     if(!locked && !stdout) {
         exec(config.lockCmd, function(error, stdout, stderr) {
-console.log(arguments);
         });
+
+        /*
+        setTimeout(function() {
+            exec(config.unlockCmd);
+        }, 25000);
+        */
     }
 
     if(locked && stdout) {
         exec(config.unlockCmd, function(error, stdout, stderr) {
-console.log(arguments);
         });
     }
 }
