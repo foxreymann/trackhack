@@ -13,12 +13,15 @@ var test = function() {
 }
 
 var tested = function(stdout) {
-    console.log(stdout);
+console.log(stdout);
     if(!stdout) {
-console.log('lock');
         exec(config.lockCmd, function(error, stdout, stderr) {
-            console.log(arguments);
+console.log(arguments);
         });
+
+        setTimeout(function() {
+            exec('killall slock');
+        }, 5000);
     }
 }
 
