@@ -7,6 +7,8 @@ var exec = require('child_process').exec,
     cmd = 'sudo iwlist wlp3s0 scan | grep ' + config.ssid,
     locked = false;
 
+/* debug config */
+
 
 var test = function() {
     exec(cmd, function(error, stdout, stderr) {
@@ -16,19 +18,15 @@ var test = function() {
 
 var tested = function(stdout) {
     if(!locked && !stdout) {
-        exec(config.lockCmd, function(error, stdout, stderr) {
-        });
+        locked = true;
 
-        /*
-        setTimeout(function() {
-            exec(config.unlockCmd);
-        }, 25000);
-        */
+        exec(config.lockCmd, function(error, stdout, stderr) {});
     }
 
     if(locked && stdout) {
-        exec(config.unlockCmd, function(error, stdout, stderr) {
-        });
+        locked = false;
+
+        exec(config.unlockCmd, function(error, stdout, stderr) {});
     }
 }
 
