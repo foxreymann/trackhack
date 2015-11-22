@@ -1,9 +1,11 @@
 var exec = require('child_process').exec,
     config = {
         ssid: 'vanreymann',
-        lockCmd: 'slock'
+        lockCmd: 'slock',
+        unlockCmd: 'killall slock'
     },
-    cmd = 'sudo iwlist wlp3s0 scan | grep ' + config.ssid;
+    cmd = 'sudo iwlist wlp3s0 scan | grep ' + config.ssid,
+    locked = false;
 
 
 var test = function() {
@@ -14,14 +16,16 @@ var test = function() {
 
 var tested = function(stdout) {
 console.log(stdout);
-    if(!stdout) {
+    if(!locked && !stdout) {
         exec(config.lockCmd, function(error, stdout, stderr) {
 console.log(arguments);
         });
+    }
 
-        setTimeout(function() {
-            exec('killall slock');
-        }, 5000);
+    if(locked && stdout) {
+        exec(config.unlockCmd, function(error, stdout, stderr) {
+console.log(arguments);
+        });
     }
 }
 
@@ -29,4 +33,4 @@ test();
 
 setInterval(function() {
     test();
-}, 10000);
+}, 5000);
